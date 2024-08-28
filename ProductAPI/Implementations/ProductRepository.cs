@@ -17,31 +17,31 @@ namespace ProductAPI.Intefaces
 
         public async Task<IEnumerable<ProductModel>> GetAllProductsAsync()
         {
-            IEnumerable<ProductModel> productList = await (from item in _productDbContext.TblDpproducts
-                                                     select new ProductModel
-                                                     {
-                                                         ItemId = item.ProductId,
-                                                         Name = item.Name,
-                                                         Description = item.Description,
-                                                         Price = item.Price,
-                                                         CategoryId = item.CategoryId,
-                                                     }).ToListAsync();
+            IEnumerable<ProductModel> productList = await (from prod in _productDbContext.TblDpproducts
+                                                           select new ProductModel
+                                                           {
+                                                               ProductId = prod.ProductId,
+                                                               Name = prod.Name,
+                                                               Description = prod.Description,
+                                                               Price = prod.Price,
+                                                               CategoryId = prod.CategoryId,
+                                                           }).ToListAsync();
             return productList;
         }
 
-        public async Task<ProductModel> GetProductByIDAsync(int itemId)
+        public async Task<ProductModel> GetProductByIDAsync(int productId)
         {
-            ProductModel? itemObj = await (from item in _productDbContext.TblBcitems
-                                        where item.ItemId == itemId
-                                        select new ProductModel
-                                        {
-                                            ItemId = item.ItemId,
-                                            Name = item.Name,
-                                            Description = item.Description,
-                                            Price = item.Price,
-                                            CategoryId = item.CategoryId,
-                                        }).FirstOrDefaultAsync();
-            return itemObj;
+            ProductModel? prodObj = await (from prod in _productDbContext.TblDpproducts
+                                           where prod.ProductId == productId
+                                           select new ProductModel
+                                           {
+                                               ProductId = prod.ProductId,
+                                               Name = prod.Name,
+                                               Description = prod.Description,
+                                               Price = prod.Price,
+                                               CategoryId = prod.CategoryId,
+                                           }).FirstOrDefaultAsync();
+            return prodObj;
         }
 
         public async Task<bool> AddProductAsync(ProductModel product)

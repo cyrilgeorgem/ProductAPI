@@ -6,7 +6,7 @@ namespace ProductAPI.Implementations
     public interface IProductRepository
     {
         Task<IEnumerable<ProductModel>> GetAllProductsAsync();
-        Task<ProductModel> GetProductByIDAsync(int itemId);
+        Task<ProductModel> GetProductByIDAsync(int productId);
         Task<bool> AddProductAsync(ProductModel employee);
         Task<bool> UpdateProductAsync(ProductModel employee);
         Task<bool> DeleteProductAsync(int productId);

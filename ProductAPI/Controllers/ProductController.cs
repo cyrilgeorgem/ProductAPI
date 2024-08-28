@@ -31,11 +31,20 @@ namespace ProductAPI.Controllers
             }
         }
 
-        // GET api/<ProductController>/1
+        // GET api/Product/1
         [HttpGet("GetProductById/{productId:int}")]
-        public string GetProductById(int productId)
+        public async Task<IActionResult> GetProductById(int productId)
         {
-            return "value";
+            try
+            {
+                ProductModel prodObj = new ProductModel();
+                prodObj = await _productRepository.GetProductByIDAsync(productId);
+                return Ok(prodObj);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }
