@@ -24,7 +24,7 @@ namespace ProductAPI.Controllers
             {
                 if (loginUser.UserName == "" || loginUser.Password == "")
                 {
-                    return Unauthorized();
+                    return StatusCode(401);
                 }
                 bool userValidated = await _loginRepository.CheckUserLoginAsync(loginUser);
                 if (userValidated == true)

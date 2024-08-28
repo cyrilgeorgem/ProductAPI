@@ -19,13 +19,13 @@ namespace Product.DAL.Entities
         public virtual DbSet<TblBccategory> TblBccategories { get; set; } = null!;
         public virtual DbSet<TblBcitem> TblBcitems { get; set; } = null!;
         public virtual DbSet<TblDpcategory> TblDpcategories { get; set; } = null!;
+        public virtual DbSet<TblDplogin> TblDplogins { get; set; } = null!;
         public virtual DbSet<TblDpproduct> TblDpproducts { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //if (!optionsBuilder.IsConfigured)
             //{
-            //    optionsBuilder.UseSqlServer();
             //}
         }
 
@@ -80,6 +80,19 @@ namespace Product.DAL.Entities
                 entity.ToTable("tblDPCategory");
 
                 entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TblDplogin>(entity =>
+            {
+                entity.ToTable("tblDPLogin");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserName)
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
