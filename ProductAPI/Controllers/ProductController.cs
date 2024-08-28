@@ -48,6 +48,28 @@ namespace ProductAPI.Controllers
             }
         }
 
+        // POST api/Product/AddNewProduct
+        [HttpPost("AddNewProduct")]
+        public async Task<IActionResult> AddNewProduct([FromBody] ProductModel product)
+        {
+            try
+            {
+                bool status = await _productRepository.AddProductAsync(product);
+                if (status == true)
+                {
+                    return Ok(StatusCodes.Status201Created);
+                }
+                else
+                {
+                    return BadRequest("Error adding product");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         // PUT api/Product/UpdateProduct
         [HttpPut("UpdateProduct")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductModel product)
