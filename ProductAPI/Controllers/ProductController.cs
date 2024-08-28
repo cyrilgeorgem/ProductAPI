@@ -3,6 +3,7 @@ using Product.DAL.Entities;
 using ProductAPI.Intefaces;
 using ProductAPI.Implementations;
 using ProductAPI.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace ProductAPI.Controllers
 {
@@ -18,7 +19,7 @@ namespace ProductAPI.Controllers
 
         // GET: api/Product/GetAllProducts
         [HttpGet("GetAllProducts")]
-        public async Task<IActionResult> GetItemList()
+        public async Task<IActionResult> GetAllProducts()
         {
             try
             {
@@ -27,7 +28,7 @@ namespace ProductAPI.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Error fetching Products");
             }
         }
 
@@ -40,6 +41,28 @@ namespace ProductAPI.Controllers
                 ProductModel prodObj = new ProductModel();
                 prodObj = await _productRepository.GetProductByIDAsync(productId);
                 return Ok(prodObj);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error fetching Product");
+            }
+        }
+
+        // POST api/Product/AddNewProduct
+        [HttpPost("AddNewProduct")]
+        public async Task<IActionResult> AddNewProduct([FromBody] ProductModel product)
+        {
+            try
+            {
+                bool status = await _productRepository.AddProductAsync(product);
+                if (status == true)
+                {
+                    return Ok(StatusCodes.Status201Created);
+                }
+                else
+                {
+                    return BadRequest("Error adding product");
+                }
             }
             catch (Exception ex)
             {
