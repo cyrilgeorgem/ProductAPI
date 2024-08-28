@@ -7,8 +7,8 @@ namespace ProductAPI.Implementations
     {
         Task<IEnumerable<ProductModel>> GetAllProductsAsync();
         Task<ProductModel> GetProductByIDAsync(int productId);
-        Task<bool> AddProductAsync(ProductModel employee);
-        Task<bool> UpdateProductAsync(ProductModel employee);
+        Task<bool> AddProductAsync(ProductModel product);
+        Task<bool> UpdateProductAsync(ProductModel product);
         Task<bool> DeleteProductAsync(int productId);
     }
 }

@@ -80,14 +80,48 @@ namespace ProductAPI.Intefaces
             }
         }
 
-        public async Task<bool> UpdateProductAsync(ProductModel employee)
+        public async Task<bool> UpdateProductAsync(ProductModel product)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TblDpproduct tblDpproduct = new TblDpproduct()
+                {
+                    ProductId = product.ProductId,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    CategoryId = product.CategoryId
+                };
+                _productDbContext.Entry(tblDpproduct).State = EntityState.Modified;
+                await _productDbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteProductAsync(int productId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                TblDpproduct deleteProduct = await _productDbContext.TblDpproducts.FindAsync(productId);
+                if (deleteProduct != null)
+                {
+                    _productDbContext.TblDpproducts.Remove(deleteProduct);
+                    await _productDbContext.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace ProductAPI.Controllers
 
         // GET api/Product/1
         [HttpGet("GetProductById/{productId:int}")]
-        public async Task<IActionResult> GetProductById(int productId)
+        public async Task<IActionResult> GetProductById([FromRoute] int productId)
         {
             try
             {
@@ -48,25 +48,47 @@ namespace ProductAPI.Controllers
             }
         }
 
-        // POST api/Product/AddNewProduct
-        [HttpPost("AddNewProduct")]
-        public async Task<IActionResult> AddNewProduct([FromBody] ProductModel product)
+        // PUT api/Product/UpdateProduct
+        [HttpPut("UpdateProduct")]
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductModel product)
         {
             try
             {
-                bool status = await _productRepository.AddProductAsync(product);
+                bool status = await _productRepository.UpdateProductAsync(product);
                 if (status == true)
                 {
-                    return Ok(StatusCodes.Status201Created);
+                    return StatusCode(200);
                 }
                 else
                 {
-                    return BadRequest("Error adding product");
+                    return BadRequest("Error updating product");
                 }
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest("Error updating product");
+            }
+        }
+
+        // PUT api/Product/DeleteProduct
+        [HttpDelete("DeleteProduct/{productId:int}")]
+        public async Task<IActionResult> DeleteProduct([FromRoute] int productId)
+        {
+            try
+            {
+                bool status = await _productRepository.DeleteProductAsync(productId);
+                if (status == true)
+                {
+                    return StatusCode(200);
+                }
+                else
+                {
+                    return BadRequest("Error deleting product");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error deleting product");
             }
         }
 
