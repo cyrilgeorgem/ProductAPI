@@ -1,7 +1,7 @@
 ﻿using Product.DAL.Entities;
 using ProductAPI.Models;
 
-namespace ProductAPI.Implementations
+namespace ProductAPI.Interfaces
 {
     public interface IProductRepository
     {

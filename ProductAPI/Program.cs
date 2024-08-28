@@ -2,7 +2,7 @@ using Product.DAL;
 using Product.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using ProductAPI.Implementations;
-using ProductAPI.Intefaces;
+using ProductAPI.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +31,7 @@ builder.Services.AddDbContext<AzureFDBContext>(options =>
 
 // Register Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 
 var app = builder.Build();
 

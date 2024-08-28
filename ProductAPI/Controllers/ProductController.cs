@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Product.DAL.Entities;
-using ProductAPI.Intefaces;
+using ProductAPI.Interfaces;
 using ProductAPI.Implementations;
 using ProductAPI.Models;
 using Microsoft.AspNetCore.Http;

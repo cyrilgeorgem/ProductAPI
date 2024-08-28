@@ -1,11 +1,11 @@
 ﻿using Product.DAL.Entities;
-using ProductAPI.Implementations;
+using ProductAPI.Interfaces;
 using ProductAPI.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace ProductAPI.Intefaces
+namespace ProductAPI.Implementations
 {
     public class ProductRepository: IProductRepository
     {
