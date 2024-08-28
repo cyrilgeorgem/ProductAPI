@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Product.DAL.Entities;
+using ProductAPI.Intefaces;
+using ProductAPI.Implementations;
+using ProductAPI.Models;
 
 namespace ProductAPI.Controllers
 {
@@ -7,25 +10,30 @@ namespace ProductAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly AzureFDBContext _prodDbContext;
-        public ProductController(AzureFDBContext prodDbContext)
+        private readonly IProductRepository _productRepository;
+        public ProductController(IProductRepository productRepository)
         {
-            _prodDbContext = prodDbContext;
+            _productRepository = productRepository;
         }
 
-        // GET: api/<ProductController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        // GET: api/Product/GetAllProducts
+        [HttpGet("GetAllProducts")]
+        public async Task<IActionResult> GetItemList()
         {
-            //Test DB
-            IEnumerable<TblDpproduct> prodList = (from prod in _prodDbContext.TblDpproducts
-                            select prod).ToList();
-            return new string[] { "value1", "value2" };
+            try
+            {
+                IEnumerable<ProductModel> prodList = await _productRepository.GetAllProductsAsync();
+                return Ok(prodList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // GET api/<ProductController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/<ProductController>/1
+        [HttpGet("GetProductById/{productId:int}")]
+        public string GetProductById(int productId)
         {
             return "value";
         }
